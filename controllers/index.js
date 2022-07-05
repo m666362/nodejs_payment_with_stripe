@@ -3,6 +3,8 @@ var express = require('express'),
     router = express.Router();
 
 router.use('/users', require('./users'));
+router.use('/houses', require('./houses'));
+router.use('/transactions', require('./transactions'));
 
 router.get('/', function (req, res) {
     res.render('index', {title: 'Boilerplate'});

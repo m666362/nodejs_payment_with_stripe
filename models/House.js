@@ -1,5 +1,6 @@
 const mongoose = require("../utils/mongoose");
 const constants = require("../utils/constants");
+const Transaction = require("./Transaction");
 // type: String,
 // required: true,
 // unique: true
@@ -9,83 +10,25 @@ const MongooseSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    email: {
-      type: String,
-      unique: true,
-      required: true,
-    },
-    phone: {
-      type: String,
+    rent: {
+      type: Number,
       // unique: true,
     },
-    age: {
+    due: {
       type: Number,
-      required: true,
     },
-    house: {
-      type: mongoose.Types.ObjectId,
-      ref: "house",
-      required: true,
-      autopopulate: { maxDepth: 1 },
-    },
-    // gender: {
-    //   type: String,
-    //   required: true,
-    // },
-    // identityNo: {
-    //   type: String,
-    //   // unique: true,
-    // },
-    // identityUrl: {
-    //   type: String,
-    //   // required: true,
-    //   // unique: true,
-    // },
-    // imageUrl: {
-    //   type: String,
-    //   // required: true,
-    //   // unique: true,
-    // },
-    // profession: {
-    //   type: String,
-    //   required: true,
-    // },
-    // father: {
-    //   type: String,
-    //   required: true,
-    //   // unique: true,
-    // },
-    // fatherNid: {
-    //   type: String,
-    //   required: true,
-    // },
-    // fatherNo: {
-    //   type: String,
-    //   required: true,
-    // },
-    // mother: {
-    //   type: String,
-    //   required: true,
-    // },
-    // motherNid: {
-    //   type: String,
-    //   required: true,
-    // },
-    // motherNo: {
-    //   type: String,
-    //   required: true,
-    // },
     status: {
       type: String,
-      enum: ["admin", "blocked", "user", "Current Member", "Previous Member"],
-      default: "Current Member",
+      enum: ["admin", "blocked", "user"],
+      default: "user",
     },
   },
   { timestamps: true }
 ).plugin(require("mongoose-autopopulate"));
 
 //
-const SchemaModel = (module.exports = mongoose.model("user", MongooseSchema));
+module.exports.MongooseSchema = MongooseSchema;
+const SchemaModel = (module.exports = mongoose.model("house", MongooseSchema));
 
 // C
 module.exports.createData = (data, callback) => {
@@ -138,3 +81,11 @@ module.exports.removeAllData = (callback) => {
     callback
   );
 };
+
+// transactions: [
+//     {
+//       type: mongoose.Types.ObjectId,
+//       ref: "transaction",
+//       autopopulate: { maxDepth: 1 }
+//     },
+//   ],

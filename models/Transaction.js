@@ -1,5 +1,6 @@
 const mongoose = require("../utils/mongoose");
 const constants = require("../utils/constants");
+const House = require("./House");
 // type: String,
 // required: true,
 // unique: true
@@ -7,18 +8,11 @@ const MongooseSchema = new mongoose.Schema(
   {
     name: {
       type: String,
-      required: true,
+      enum: ["Monthly rent", "Other Service"],
+      default: "Monthly rent",
+      //   required: true,
     },
-    email: {
-      type: String,
-      unique: true,
-      required: true,
-    },
-    phone: {
-      type: String,
-      // unique: true,
-    },
-    age: {
+    amount: {
       type: Number,
       required: true,
     },
@@ -28,64 +22,17 @@ const MongooseSchema = new mongoose.Schema(
       required: true,
       autopopulate: { maxDepth: 1 },
     },
-    // gender: {
-    //   type: String,
-    //   required: true,
-    // },
-    // identityNo: {
-    //   type: String,
-    //   // unique: true,
-    // },
-    // identityUrl: {
-    //   type: String,
-    //   // required: true,
-    //   // unique: true,
-    // },
-    // imageUrl: {
-    //   type: String,
-    //   // required: true,
-    //   // unique: true,
-    // },
-    // profession: {
-    //   type: String,
-    //   required: true,
-    // },
-    // father: {
-    //   type: String,
-    //   required: true,
-    //   // unique: true,
-    // },
-    // fatherNid: {
-    //   type: String,
-    //   required: true,
-    // },
-    // fatherNo: {
-    //   type: String,
-    //   required: true,
-    // },
-    // mother: {
-    //   type: String,
-    //   required: true,
-    // },
-    // motherNid: {
-    //   type: String,
-    //   required: true,
-    // },
-    // motherNo: {
-    //   type: String,
-    //   required: true,
-    // },
-    status: {
-      type: String,
-      enum: ["admin", "blocked", "user", "Current Member", "Previous Member"],
-      default: "Current Member",
-    },
   },
   { timestamps: true }
 ).plugin(require("mongoose-autopopulate"));
 
 //
-const SchemaModel = (module.exports = mongoose.model("user", MongooseSchema));
+
+module.exports.TransactionSchema = MongooseSchema;
+const SchemaModel = (module.exports = mongoose.model(
+  "transaction",
+  MongooseSchema
+));
 
 // C
 module.exports.createData = (data, callback) => {
